@@ -1,0 +1,8 @@
+Package: OEI
+Title: My Code for this project
+Description: Read in the ocean ecosystem index data
+Version: 0.0
+License: My license
+Author: Brandon Chasco <brandon.chasco@noaa.gov>
+Maintainer: Brandon Chasco <brandon.chasco@noaa.gov>
+RoxygenNote: 7.1.1
