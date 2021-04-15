@@ -8,6 +8,10 @@ library(tidyr)
 
 rm(list=ls())
 
+# User info
+uid="your username goes here"
+pwd="your password goes here"
+
 #**********************************************
 #    Download PDO
 #**********************************************
@@ -132,7 +136,7 @@ legend("bottomright", legend = c("Winter","Spring","Summer","Autumn"), col = col
 #**********************************************
 
 # Create the channel to connect to the database
-channel <- odbcConnect("NWFSC_OCEAN", uid="your username goes here", pwd="your password goes here")
+channel <- odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
 
 # Query the existing data, we want to know what years are in there
 existingData<-sqlQuery(channel, "SELECT [SigmaPlotDate]
