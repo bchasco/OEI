@@ -9,8 +9,8 @@ library(tidyr)
 rm(list=ls())
 
 # User info
-uid="Brian.Burke"
-pwd="Burke.Brian"
+uid="your username goes here"
+pwd="your username goes here"
 
 
 ##### NPGO ####
