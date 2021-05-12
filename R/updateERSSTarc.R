@@ -16,12 +16,13 @@ pwd="your password goes here"
 # Import the boundary file from Johnstone
 wholeGrid<-read.table("./R/yx3", header = FALSE)
 arc<-read.table("./R/arc3", header = FALSE)
-# arc<-wholeGrid[t(arc),]
+arc<-wholeGrid[t(arc),]
 # plot(wholeGrid$V2, wholeGrid$V1)
 # points(arc$V2, arc$V1, col="red")
 
 
-# We need the lat and long for the arc area, use any file for this
+# We need the lat and long for the arc area, not just the index for them
+#  use any file for this
 anyfile <- ersst(year = 2010, month = 2)
 names(anyfile)
 lon <- ncdf4::ncvar_get(anyfile,"lon")
@@ -34,18 +35,19 @@ arcLocsX<-match(arc$V2, lon)
 # Get the mean SSTa from the arc area (this could take awhile, the first time you run it)
 meanArc<-data.frame(year=as.numeric(), month=as.numeric(), sstarc=as.numeric(), stringsAsFactors = FALSE)
 # Loop over files and get mean arc anomaly
-for (yy in 2018:2021) {
+for (yy in 1970:2021) {
   for (mm in 1:12) {
     #if ( yy==2017 & mm > 4) next
     try({
       thisfile <- ersst(year = yy, month = mm)
       ssta <- ncdf4::ncvar_get(thisfile,"ssta")
-      meanArc[nrow(meanArc)+1,]<-data.frame(yy, mm, mean(ssta[cbind(arcLocsX, arcLocsY)]), stringsAsFactors = FALSE)
+      meanArc[nrow(meanArc)+1,]<-data.frame(yy, mm, mean(ssta[cbind(arcLocsX, arcLocsY)], na.rm = TRUE), stringsAsFactors = FALSE)
     }
     ,silent = T)
   }
 }
 
+plot(meanArc$year+meanArc$month/12, meanArc$sstarc, type='l', xlab="", ylab="SSTarc")
 
 #**********************************************
 #    Push data to database
