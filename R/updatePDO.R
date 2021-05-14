@@ -8,9 +8,6 @@ library(tidyr)
 
 rm(list=ls())
 
-# User info
-uid="your username goes here"
-pwd="your password goes here"
 
 #**********************************************
 #    Download PDO

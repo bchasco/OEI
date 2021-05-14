@@ -9,9 +9,6 @@ library(rnoaa)
 
 rm(list=ls())
 
-# User info
-uid="your username goes here"
-pwd="your password goes here"
 
 # Import the boundary file from Johnstone
 wholeGrid<-read.table("./R/yx3", header = FALSE)

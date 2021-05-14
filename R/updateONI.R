@@ -8,10 +8,6 @@ library(tidyr)
 
 rm(list=ls())
 
-# User info
-uid="your username goes here"
-pwd="your username goes here"
-
 
 
 ##### ONI ####
