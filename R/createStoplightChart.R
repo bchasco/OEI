@@ -46,7 +46,7 @@ names(stoplightData)
 indTypeAssignments<-c(1,1,1,2,2,2,2,2,3,3,3,3,3,3,3,3)
 
 jpeg(filename = "stopight_temp.jpeg",
-     width = 1000, height = 500, units = "px", pointsize = 12)
+     width = 800, height = 500, units = "px", pointsize = 12)
 
 plot.new()
 # I don't know why but sometimes I have to call this to reset the plotting area
