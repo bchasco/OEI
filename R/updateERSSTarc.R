@@ -16,6 +16,8 @@ rm(list=ls())
  return(data)
 }
 
+myData <- updateWebdata(pwd="myPassword",uid ="bchasco", covariate = "mySST")
+
 # Import the boundary file from Johnstone
 wholeGrid<-read.table("./R/yx3", header = FALSE)
 arc<-read.table("./R/arc3", header = FALSE)
