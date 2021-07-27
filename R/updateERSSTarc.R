@@ -11,7 +11,7 @@ rm(list=ls())
 
 
 updateWebdata <- function(pwd=pwd, uid = uid, covariate = "erSST"){
-  plot(1)
+  connectoToDb(uid,pwd) #This is a connect function that is already in the package OEI
  }
 
 # Import the boundary file from Johnstone
