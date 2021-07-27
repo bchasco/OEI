@@ -2,17 +2,19 @@
 #    create monthly and seasonal indices from the arc region (JOhnstone and Mantua 2014),
 #    and load them into the database
 
-library(RODBC)
+
+
+updateWebdata <- function(pwd=pwd, uid = uid, covariate = "erSST"){
+ library(RODBC)
 library(dplyr)
 library(tidyr)
 library(rnoaa)
 
 rm(list=ls())
-
-
-updateWebdata <- function(pwd=pwd, uid = uid, covariate = "erSST"){
-  connectoToDb(uid,pwd) #This is a connect function that is already in the package OEI
- }
+ connectoToDb(uid,pwd) #This is a connect function that is already in the package OEI
+ data <- getData(covariate) #get Data is another function in the package
+ return(data)
+}
 
 # Import the boundary file from Johnstone
 wholeGrid<-read.table("./R/yx3", header = FALSE)
