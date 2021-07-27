@@ -10,6 +10,10 @@ library(rnoaa)
 rm(list=ls())
 
 
+updateWebdata <- function(pwd=pwd, uid = uid, covariate = "erSST"){
+  plot(1)
+ }
+
 # Import the boundary file from Johnstone
 wholeGrid<-read.table("./R/yx3", header = FALSE)
 arc<-read.table("./R/arc3", header = FALSE)
