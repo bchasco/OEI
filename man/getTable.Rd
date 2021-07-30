@@ -4,17 +4,17 @@
 \alias{getTable}
 \title{Read in information from database using}
 \usage{
-getTable(uid = uid, pwd = pwd, db = db, tableName = NA)
+getTable(uid = uid, pwd = pwd, db = "NWFSC_OCEAN", tableName = NA)
 }
 \arguments{
 \item{uid}{User ID}
 
-\item{pwd}{Default passwoed}
+\item{pwd}{Default password}
 
 \item{db}{Database name}
 }
 \value{
-table A table from the list of queries that have already been built.
+table A table from the list of tables that have already been built.
 }
 \description{
 getTable
