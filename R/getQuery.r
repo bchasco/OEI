@@ -1,0 +1,28 @@
+#'Read in information from database using 
+#'
+#'RODBC
+#'@param uid User ID
+#'@param pwd Default passwoed
+#'@param db Database name
+#'@return query A query from the list of queries that have already been built.
+#'@export
+getQuery <- function(uid = uid,
+                    pwd = pwd,
+                    db = db,
+                    qryName = NA){
+  
+  #Create the channel first
+  channel <- odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
+  
+  #Available queries 
+  availableQueries <- getQueryList()
+  
+  #Read the available query names in the database
+  if(qryName%in%availableQueries){
+    query <- readQuery(channel, qryName)
+    return(query)
+  }else{
+    print("The are the available queries for your user account. \n Please choose one.")
+    print(query)
+  }
+}
