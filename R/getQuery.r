@@ -1,6 +1,6 @@
 #'Read in information from database using 
 #'
-#'RODBC
+#'getQuery
 #'@param uid User ID
 #'@param pwd Default password
 #'@param db Database name
