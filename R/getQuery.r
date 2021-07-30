@@ -2,8 +2,9 @@
 #'
 #'RODBC
 #'@param uid User ID
-#'@param pwd Default passwoed
+#'@param pwd Default password
 #'@param db Database name
+#'@param qryName The name of a pre-built query in the database
 #'@return query A query from the list of queries that have already been built.
 #'@export
 getQuery <- function(uid = uid,
