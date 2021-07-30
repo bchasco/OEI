@@ -11,14 +11,15 @@ getTable <- function(uid = uid,
                     db = db,
                     tableName = NA){
   
-  #Create the channel first
-  channel <- odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
+  #Create the channel first. Notice we do not use library. The library is already "install"
+  #in the description file. And you use :: to reference the function in RODBC
+  channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
   
   #Available queries 
-  availableTables <- getTableList()
+  availableTables <- RODBC::sqlTables(channel = channel)
   
   #Read the available query names in the database
-  if(qryName%in%availableTables){
+  if(tableName%in%availableTables){
     table <- readTable(channel, tableName)
     return(table)
   }else{
