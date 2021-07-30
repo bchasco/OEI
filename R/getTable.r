@@ -18,6 +18,7 @@ getTable <- function(uid = uid,
   #Available queries 
   availableTables <- RODBC::sqlTables(channel = channel)
   
+  
   #Read the available query names in the database
   if(tableName%in%availableTables){
     table <- RODBC::sqlFetch(channel, tableName)
