@@ -8,6 +8,8 @@ readRODBC()
 }
 \arguments{
 \item{x}{some parameter we are interested in}
+
+\item{par2}{added a second parameter}
 }
 \value{
 A table of information
