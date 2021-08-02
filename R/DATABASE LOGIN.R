@@ -6,6 +6,6 @@
 library(RODBC)
 
 # User info
-uid="your username goes here"
-pwd="your username goes here"
+uid="Brian.Burke"
+pwd="Burke.Brian"
 

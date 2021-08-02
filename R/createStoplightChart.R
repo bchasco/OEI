@@ -49,7 +49,7 @@ jpeg(filename = "stopight_temp.jpeg",
      width = 900, height = 500, units = "px", pointsize = 12)
 
 plot.new()
-# I don't know why but sometimes I have to call this to reset the plotting area
+# I don't know why but sometimes I have to call this to reset some par variables
 resetPlot<-function() {
   par(fig=c(0,1,0,1), new=TRUE, mar=c(0,0,0,0), usr=c(0,1,0,1))
   plot(0,type='n',axes=FALSE,ann=FALSE)
@@ -57,6 +57,9 @@ resetPlot<-function() {
 
 # Separator locations (between 0 and 1)
 sepLocs<-c(0.75, 0.47)
+# plt<-par()$plt
+# usr<-par()$usr
+# par(plt=plt, usr=usr)
 
 # Plot 1
 par(fig=c(0.22,1,sepLocs[1]-0.02,0.95), new=TRUE, mar=c(1,1,1,1), usr=c(0,1,0,1))
