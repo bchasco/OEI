@@ -4,6 +4,7 @@
 #'@param uid User ID
 #'@param pwd Default password
 #'@param db Database name
+#'@param tableName The name of the schema and table of interest - "schema.table" 
 #'@return table A table from the list of tables that have already been built.
 #'@export
 getTable <- function(uid = uid,
@@ -17,14 +18,17 @@ getTable <- function(uid = uid,
   
   #Available queries 
   availableTables <- RODBC::sqlTables(channel = channel)
-  
+  # Limit to just schemas we would use
+  availableTables <- subset(availableTables, TABLE_SCHEM %in% c("crepo","globec","ncc","predator","prerecruit"))
+  # The set of tables, in the format we need
+  availableTables <- paste0(availableTables$TABLE_SCHEM, ".", availableTables$TABLE_NAME)
   
   #Read the available query names in the database
   if(tableName%in%availableTables){
     table <- RODBC::sqlFetch(channel, tableName)
     return(table)
   }else{
-    cat("These are the available table for your user account. \n Please choose one.")
-    cat(availableTables)
+    cat("These are the available tables for your user account. Please choose one. \n")
+    cat(availableTables, sep = '\n')
   }
 }
