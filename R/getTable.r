@@ -10,6 +10,7 @@
 getTable <- function(uid = uid,
                     pwd = pwd,
                     db = "NWFSC_OCEAN",
+                    schemaName = c("crepo","globec","ncc","predator","prerecruit","dbo"),
                     tableName = NA){
   
   #Create the channel first. Notice we do not use library. The library is already "install"
@@ -19,13 +20,13 @@ getTable <- function(uid = uid,
   #Available queries 
   availableTables <- RODBC::sqlTables(channel = channel)
   # Limit to just schemas we would use
-  availableTables <- subset(availableTables, TABLE_SCHEM %in% c("crepo","globec","ncc","predator","prerecruit","dbo"))
+  availableTables <- subset(availableTables, TABLE_SCHEM %in% schemaName)
   # The set of tables, in the format we need
   availableTables <- paste0(availableTables$TABLE_SCHEM, ".", availableTables$TABLE_NAME)
   
   #Read the available query names in the database
-  if(tableName%in%availableTables){
-    table <- RODBC::sqlFetch(channel, tableName)
+  if(paste0(schemaName, ".", tableName)%in%availableTables){
+    table <- RODBC::sqlFetch(channel, paste0(schemaName, ".", tableName))
     RODBC::odbcClose(channel = channel)
     return(table)
   }else{
