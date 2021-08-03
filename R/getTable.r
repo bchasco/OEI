@@ -19,7 +19,7 @@ getTable <- function(uid = uid,
   #Available queries 
   availableTables <- RODBC::sqlTables(channel = channel)
   # Limit to just schemas we would use
-  availableTables <- subset(availableTables, TABLE_SCHEM %in% c("crepo","globec","ncc","predator","prerecruit"))
+  availableTables <- subset(availableTables, TABLE_SCHEM %in% c("crepo","globec","ncc","predator","prerecruit","dbo"))
   # The set of tables, in the format we need
   availableTables <- paste0(availableTables$TABLE_SCHEM, ".", availableTables$TABLE_NAME)
   
