@@ -26,9 +26,11 @@ getTable <- function(uid = uid,
   #Read the available query names in the database
   if(tableName%in%availableTables){
     table <- RODBC::sqlFetch(channel, tableName)
+    RODBC::odbcClose()
     return(table)
   }else{
     cat("These are the available tables for your user account. Please choose one. \n")
     cat(availableTables, sep = '\n')
+    RODBC::odbcClose()
   }
 }
