@@ -14,6 +14,18 @@ knitr::opts_chunk$set(
 )
 ```
 
+The 'OEI' package was developed as a way of quickly accessing data from databases maintained by the Ocean Ecology group.
+
 ```{r setup}
 library(OEI)
+```
+
+This is a plot
+```{r, include = TRUE}
+
+x <- rnorm(100)
+y <- rnorm(100)
+
+plot(x,y)
+
 ```
