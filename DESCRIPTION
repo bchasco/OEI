@@ -6,5 +6,8 @@ License: My license
 Author: Brandon Chasco <brandon.chasco@noaa.gov>
 Maintainer: Brandon Chasco <brandon.chasco@noaa.gov>
 RoxygenNote: 7.1.1
+VignetteBuilder: knitr
 Imports:
-    RODBC
+    RODBC,
+    knitr,
+    rmarkdown
