@@ -1,7 +1,7 @@
 Package: OEI
 Title: My Code for this project
 Description: Read in the ocean ecosystem index data
-Version: 0.0
+Version: 0.0.1
 License: My license
 Author: Brandon Chasco <brandon.chasco@noaa.gov>
 Maintainer: Brandon Chasco <brandon.chasco@noaa.gov>
@@ -10,4 +10,5 @@ VignetteBuilder: knitr
 Imports:
     RODBC,
     knitr,
-    rmarkdown
+    rmarkdown,
+    ggplot2
