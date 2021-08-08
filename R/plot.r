@@ -14,4 +14,5 @@ plot <- function(df=data.frame(x=1:4,y=1:4, c= NULL)){
       ggplot2::facet_wrap(~c)
   }
   print(p)
+  print("test branch")
 }
