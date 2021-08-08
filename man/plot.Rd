@@ -4,7 +4,7 @@
 \alias{plot}
 \title{Title}
 \usage{
-plot(df = data.frame(x = 1:4, y = 1:4, c = NULL))
+plot(df = data.frame(x = 1:4, y = 1:4, c = NULL), ylab = "", xlab = "")
 }
 \arguments{
 \item{df}{data.frame}
