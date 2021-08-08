@@ -17,6 +17,8 @@ getTable <- function(uid = uid,
   #in the description file. And you use :: to reference the function in RODBC
   channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
   
+  #test 
+  
   #Available queries 
   availableTables <- RODBC::sqlTables(channel = channel)
   # Limit to just schemas we would use
