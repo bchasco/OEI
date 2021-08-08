@@ -4,10 +4,17 @@
 \alias{plot}
 \title{Title}
 \usage{
-plot(df = data.frame(x = 1:4, y = 1:4, c = NULL), ylab = "", xlab = "")
+plot(
+  df = data.frame(x = 1:4, y = 1:4),
+  ylab = "",
+  xlab = "",
+  multipane = FALSE
+)
 }
 \arguments{
-\item{df}{data.frame}
+\item{df}{data.frame with the following column headings: x, y, Index}
+
+\item{multipane}{Whether you want multicolors or multiple panes}
 }
 \value{
 ggplot

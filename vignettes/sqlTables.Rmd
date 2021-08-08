@@ -20,12 +20,3 @@ The 'OEI' package was developed as a way of quickly accessing data from database
 library(OEI)
 ```
 
-This is a plot
-```{r, include = TRUE}
-
-x <- rnorm(100)
-y <- rnorm(100)
-
-plot(x,y)
-
-```
