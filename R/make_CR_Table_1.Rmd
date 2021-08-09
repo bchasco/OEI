@@ -7,6 +7,10 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(OEI)
+library(knitr)
+uid<-"Brian.Burke"
+pwd<-"Burke.Brian"
 ```
 
 ## R Markdown
