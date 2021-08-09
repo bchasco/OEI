@@ -26,7 +26,8 @@ getTable <- function(uid = uid,
   
   #Read the available query names in the database
   if(paste0(schemaName, ".", tableName)%in%availableTables){
-    table <- RODBC::sqlFetch(channel, paste0(schemaName, ".", tableName))
+    table <- RODBC::sqlQuery(channel, paste("select * from",
+                                            paste0("[",schemaName, "].[", tableName,"]")))
     RODBC::odbcClose(channel = channel)
     return(table)
   }else{
