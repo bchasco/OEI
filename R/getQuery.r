@@ -13,7 +13,7 @@ getQuery <- function(uid = uid,
                     qryName = NA){
   
   #Create the channel first
-  channel <- odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
+  channel <- RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
   
   #Available queries 
   availableQueries <- getQueryList()

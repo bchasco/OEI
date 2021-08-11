@@ -3,4 +3,5 @@
 export(connectDb)
 export(getQuery)
 export(getTable)
+export(plot)
 export(readRODBC)

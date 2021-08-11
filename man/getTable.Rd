@@ -4,7 +4,13 @@
 \alias{getTable}
 \title{Read in information from database using}
 \usage{
-getTable(uid = uid, pwd = pwd, db = "NWFSC_OCEAN", tableName = NA)
+getTable(
+  uid = uid,
+  pwd = pwd,
+  db = "NWFSC_OCEAN",
+  schemaName = c("crepo", "globec", "ncc", "predator", "prerecruit", "dbo"),
+  tableName = NA
+)
 }
 \arguments{
 \item{uid}{User ID}
@@ -12,6 +18,8 @@ getTable(uid = uid, pwd = pwd, db = "NWFSC_OCEAN", tableName = NA)
 \item{pwd}{Default password}
 
 \item{db}{Database name}
+
+\item{tableName}{The name of the schema and table of interest - "schema.table"}
 }
 \value{
 table A table from the list of tables that have already been built.

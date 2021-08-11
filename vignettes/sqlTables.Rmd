@@ -1,0 +1,22 @@
+---
+title: "sqlTables"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{sqlTables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The 'OEI' package was developed as a way of quickly accessing data from databases maintained by the Ocean Ecology group.
+
+```{r setup}
+library(OEI)
+```
+
