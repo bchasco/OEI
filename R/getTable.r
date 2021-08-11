@@ -7,24 +7,32 @@
 #'@return table A table from the list of tables that have already been built.
 #'@export
 getTable <- function(uid = uid,
-                    pwd = pwd,
-                    db = "NWFSC_OCEAN",
-                    tableName = NA){
+                     pwd = pwd,
+                     db = "NWFSC_OCEAN",
+                     schemaName = c("crepo","globec","ncc","predator","prerecruit","dbo"),
+                     tableName = NA){
   
   #Create the channel first. Notice we do not use library. The library is already "install"
   #in the description file. And you use :: to reference the function in RODBC
-  channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
+  channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid="brandon.chasco", pwd="bchasco")
   
   #Available queries 
-  availableTables <- RODBC::sqlTables(channel = channel)
+  availableTables <- RODBC::sqlTables(channel = channel) %>% 
+    filter(TABLE_SCHEM == schemaName) %>%
+    unite(availableTables, c("TABLE_SCHEM","TABLE_NAME"), sep=".") %>%
+    select(availableTables)
   
-  
-  #Read the available query names in the database
-  if(tableName%in%availableTables){
-    table <- RODBC::sqlFetch(channel, tableName)
-    return(table)
+  #This is a little jinky because of RODBC specifics to error handling
+  tab <- tryCatch(RODBC::sqlQuery(channel, 
+                                  paste("select * from",paste0("[",schemaName, "].[", tableName,"]")), 
+                                  FALSE), #FALSE is for RODBC error handling
+                  error = function(e) e) #Dummy error
+
+  RODBC::odbcClose(channel = channel)
+  if(is.null(dim(tab))){ # -1 if RODBC throws an error
+    print(availableTables)
+    cat("Error: Choose from one of the listed tables.")
   }else{
-    cat("These are the available table for your user account. \n Please choose one.")
-    cat(availableTables)
-  }
+    return(tab)           
+  } 
 }
