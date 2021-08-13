@@ -6,8 +6,8 @@
 #' @return ggplot
 #' @export
 #'
-#' @examples plot
-plot <- function(df=data.frame(x=1:4,y=1:4),
+#' @examples oeiplot
+oeiplot <- function(df=data.frame(x=1:4,y=1:4),
                  ylab="",
                  xlab="",
                  multipane=FALSE,
