@@ -11,4 +11,6 @@ Imports:
     RODBC,
     knitr,
     rmarkdown,
-    ggplot2
+    ggplot2,
+    dplyr,
+    tidyverse

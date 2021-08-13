@@ -1,0 +1,54 @@
+---
+title: "make_CR_Table_1"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{make_CR_Table_1}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(OEI)
+library(knitr)
+#library(dplyr)#You shouldn't have to include these
+#library(tidyverse)#You shouldn't have to include these
+uid<-"Brian.Burke"
+pwd<-"Burke.Brian"
+```
+
+## R Markdown
+
+Test document to recreate Table 1 in the June 2019 Cruise Report
+
+```{r getTable}
+trawlInfo<-getTable(uid = uid, pwd=pwd, schemaName = "crepo", tableName = "Trawl Info")
+stationInfo<-getTable(uid = uid, pwd=pwd, schemaName = "crepo", tableName = "Station Info")
+```
+
+```{r refine data}
+trawlInfo<-trawlInfo[trawlInfo$"Cruise #"==62,]
+stationInfo<-stationInfo[stationInfo$"Cruise #"==62,]
+tableData<-merge(trawlInfo, stationInfo, by="Station Code", all.y=TRUE)
+finalData<-tableData[,c("Transect Name","Sample Date","Haul #","Station #","Depth (m)",
+                        "Start Lat (decimal degrees)","Start Long (decimal degrees)",
+                        "Trawling distance (km)","Bearing (degrees)",
+                        "Start Time","End Time")]
+# OEI::plot(df=data.frame(x=finalData$`Depth (m)`,
+#                         y=finalData$`Trawling distance (km)`,
+#                         Index=finalData$`Transect Name`), 
+#           multipane = TRUE, 
+#           ncol=3)
+
+```
+
+## Make the Table
+
+We'll see if this works:
+
+```{r make table, echo=FALSE}
+kable(finalData)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.

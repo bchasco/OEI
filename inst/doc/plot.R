@@ -1,27 +1,13 @@
----
-title: "plot"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{plot}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
----
-
-```{r, include = FALSE}
+## ---- include = FALSE-----------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-```
 
-The 'OEI' package was developed as a way of quickly accessing data from databases maintained by the Ocean Ecology group.
-
-```{r setup}
+## ----setup----------------------------------------------------------
 library(OEI)
-```
 
-This is a plot of the table data with no categories
-```{r, include = TRUE}
+## ---- include = TRUE------------------------------------------------
 
 #pretend this is a data.frame from the db
 
@@ -34,10 +20,8 @@ myDataFrame <- data.frame(y = rnorm(100)
                           )
 OEI::plot(myDataFrame)
 
-```
 
-This is a plot of the table data with categories. Same function call different data.frame, different plot.
-```{r, include = TRUE}
+## ---- include = TRUE------------------------------------------------
 
 #pretend this is a data.frame from the db
 
@@ -50,11 +34,8 @@ myDataFrame <- data.frame(y = rnorm(100)
                           )
 OEI::plot(myDataFrame)
 
-```
 
-
-This is a plot of the table data with categories. Same function call different data.frame, different plot.
-```{r, include = TRUE}
+## ---- include = TRUE------------------------------------------------
 
 #pretend this is a data.frame from the db
 
@@ -67,4 +48,4 @@ myDataFrame <- data.frame(y = rnorm(100)
                           )
 OEI::plot(myDataFrame, multipane = TRUE)
 
-```
+
