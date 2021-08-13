@@ -40,6 +40,7 @@ getTable <- function(uid = "brandon.chasco",
       }
       print(availableTables)
       my.row <- as.integer(readline(prompt = "Choose the row number for one of tables listed above: "))
+      schemaName <- strsplit(availableTables[my.row],split="\\.")[[1]][1]
       tableName <- strsplit(availableTables[my.row],split="\\.")[[1]][2]
       accessDenied <- TRUE
     }
