@@ -18,13 +18,19 @@ getTable <- function(uid = "brandon.chasco",
   channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
   
   #Available queries 
+  # availableTables <- RODBC::sqlTables(channel = channel) %>% 
+  #   filter(TABLE_SCHEM == schemaName) %>%
+  #   unite(availableTables, c("TABLE_SCHEM","TABLE_NAME"), sep=".") %>%
+  #   select(availableTables)
+  
+  #Available queries 
   availableTables <- RODBC::sqlTables(channel = channel)
   # Limit to just schemas we would use
   availableTables <- subset(availableTables, TABLE_SCHEM %in% schemaName)
   # The set of tables, in the format we need
   availableTables <- paste0(availableTables$TABLE_SCHEM, ".", availableTables$TABLE_NAME)
+  #This is a little jinky because of RODBC specifics to error handling
   
-
   tab <- NULL  
   accessDenied <- FALSE
   while(!is.data.frame(tab)){ # -1 if RODBC throws an error
