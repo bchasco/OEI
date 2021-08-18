@@ -155,7 +155,9 @@ S <- ggplot(data=mapdata) +
   coord_map(xlim=c(-125.5,-123.0),
   ylim=c(44.5,48.5)) +
   geom_point(data=salmon_ag[salmon_ag$CPUE>0 & !grepl("adult",salmon_ag$variable),], aes(x = long, y=lat, size=CPUE), pch=1, inherit.aes = FALSE) +
-  facet_wrap(~variable, ncol=4)
+  facet_wrap(~variable, ncol=4) +
+  theme_bw() + theme(panel.border = element_blank(), panel.grid.major = element_blank(),
+panel.grid.minor = element_blank(), axis.line = element_line(colour = "black"))
   # theme(legend.position = "none")
 #   
 # 
