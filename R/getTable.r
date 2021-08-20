@@ -6,6 +6,7 @@
 #'@param db Database name
 #'@param tableName The name of the schema and table of interest - "schema.table" 
 #'@param conditions use for the where clause in sql 
+#'@param remove_dup logical indicating whether the query should remove duplicate results 
 #'@return table A table from the list of tables that have already been built.
 #'@export
 getTable <- function(uid = uid,
@@ -13,7 +14,8 @@ getTable <- function(uid = uid,
                      db = "NWFSC_OCEAN",
                      schemaName = c("crepo","globec","ncc","predator","prerecruit","dbo"),
                      tableName = NA,
-                     conditions = NULL){
+                     conditions = NULL,
+                     remove_dup=FALSE){
 
   #Create the channel first. Notice we do not use library. The library is already "install"
   #in the description file. And you use :: to reference the function in RODBC
@@ -48,6 +50,7 @@ getTable <- function(uid = uid,
     print(availableTables)
     cat("Error: Choose from one of the listed tables.")
   }else{
+    if (remove_dup) tab<-dplyr::distinct(tab)
     return(tab)           
   } 
 }
