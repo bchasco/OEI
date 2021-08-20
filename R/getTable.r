@@ -5,13 +5,15 @@
 #'@param pwd Default password
 #'@param db Database name
 #'@param tableName The name of the schema and table of interest - "schema.table" 
+#'@param conditions use for the where clause in sql 
 #'@return table A table from the list of tables that have already been built.
 #'@export
 getTable <- function(uid = uid,
                      pwd = pwd,
                      db = "NWFSC_OCEAN",
                      schemaName = c("crepo","globec","ncc","predator","prerecruit","dbo"),
-                     tableName = NA){
+                     tableName = NA,
+                     conditions = NULL){
 
   #Create the channel first. Notice we do not use library. The library is already "install"
   #in the description file. And you use :: to reference the function in RODBC
@@ -31,9 +33,14 @@ getTable <- function(uid = uid,
   availableTables <- paste0(availableTables$TABLE_SCHEM, ".", availableTables$TABLE_NAME)
   #This is a little jinky because of RODBC specifics to error handling
   
-  tab <- tryCatch(RODBC::sqlQuery(channel, 
-                                  paste("select * from",paste0("[",schemaName, "].[", tableName,"]")), 
-                                  FALSE), #FALSE is for RODBC error handling
+  # Assemble the query here
+  if (is.null(conditions))
+    myQry<-paste("select * from",paste0("[",schemaName, "].[", tableName,"]"))
+  else
+    myQry<-paste("select * from",paste0("[",schemaName, "].[", tableName,"]"),
+                 "where",conditions)
+  
+  tab <- tryCatch(RODBC::sqlQuery(channel, myQry, FALSE), #FALSE is for RODBC error handling
                   error = function(e) e) #Dummy error
 
   RODBC::odbcClose(channel = channel)
