@@ -13,4 +13,11 @@ Imports:
     rmarkdown,
     ggplot2,
     dplyr,
-    tidyverse
+    tidyverse,
+    sf,
+    spData,
+    ggspatial,
+    rnaturalearth,
+    rnaturalearthdata,
+    marmap
+

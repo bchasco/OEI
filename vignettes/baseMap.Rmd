@@ -1,0 +1,57 @@
+---
+title: "baseMap"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{baseMap}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The 'OEI' package was developed as a way of quickly accessing data from databases maintained by the Ocean Ecology group.
+
+```{r setup}
+library(OEI)
+```
+
+```{r}
+#Build a simple base map
+#You can create a map with capturing the ggplot object
+OEI::baseMap()
+```
+
+```{r}
+#Or, you can create a ggplot object and capture it
+p <- OEI::baseMap()
+#Then print it
+print(p)
+```
+```{r}
+#And this way you can easily manipulate the ggplot object
+p <- OEI::baseMap() +
+    ggplot2::ggtitle('Coastline of Washington and Oregon')+
+  # # Grid lines
+  ggplot2::theme_bw()
+
+#Then print it
+print(p)
+```
+
+The state border don't overlap the 'world' borders. I'll have to figure this out. It's either a projection thing, or it has to do with the margins that pad the edge of the plot.
+
+```{r}
+#And this way you can easily manipulate the ggplot object
+p <- OEI::baseMap(stateBorders = TRUE,
+                  bath = NA) +
+  # # Grid lines
+  ggplot2::theme_bw()
+
+#Then print it
+print(p)
+```
