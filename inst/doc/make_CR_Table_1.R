@@ -1,4 +1,4 @@
-## ----setup, include=FALSE-------------------------------------------------------------------------------------------
+## ----setup, include=FALSE--------------------------------------------------------------------------
 knitr::opts_chunk$set(echo = TRUE)
 library(OEI)
 library(knitr)
@@ -7,11 +7,11 @@ library(knitr)
 uid<-"Brian.Burke"
 pwd<-"Burke.Brian"
 
-## ----getTable-------------------------------------------------------------------------------------------------------
+## ----getTable--------------------------------------------------------------------------------------
 trawlInfo<-getTable(uid = uid, pwd=pwd, schemaName = "crepo", tableName = "Trawl Info")
 stationInfo<-getTable(uid = uid, pwd=pwd, schemaName = "crepo", tableName = "Station Info")
 
-## ----refine data----------------------------------------------------------------------------------------------------
+## ----refine data-----------------------------------------------------------------------------------
 trawlInfo<-trawlInfo[trawlInfo$"Cruise #"==62,]
 stationInfo<-stationInfo[stationInfo$"Cruise #"==62,]
 tableData<-merge(trawlInfo, stationInfo, by="Station Code", all.y=TRUE)
@@ -26,6 +26,6 @@ finalData<-tableData[,c("Transect Name","Sample Date","Haul #","Station #","Dept
 #           ncol=3)
 
 
-## ----make table, echo=FALSE-----------------------------------------------------------------------------------------
+## ----make table, echo=FALSE------------------------------------------------------------------------
 kable(finalData)
 

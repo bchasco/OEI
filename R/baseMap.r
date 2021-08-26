@@ -22,10 +22,33 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     stateBorders = FALSE){
   
   #Grab the spatial data you need
-  world <- rnaturalearth::ne_countries(scale = "large", returnclass = "sf")
+  world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
+  usa_states <- ne_states(country = 'United States of America', returnclass = 'sf')
   coast <- rnaturalearth::ne_coastline(scale = "large", returnclass = "sf")
 
-  gmap <- ggplot2::ggplot(data = world)  
+  gmap <- ggplot2::ggplot(data = world) +
+    ggplot2::xlab('Longitude') +
+    ggplot2::ylab('Latitude')
+  
+  
+  #This is for the vanilla map
+  if(style==1){
+    gmap <- gmap + ggplot2::geom_sf(fill= 'antiquewhite') 
+  }
+  
+  if(stateBorders){
+    # State boundaries
+    gmap <- gmap + 
+      ggplot2::geom_sf(data=usa_states, 
+                       colour = "grey", 
+                       fill=NA)
+  }
+  
+  if(is.list(coord_lim)){
+    gmap <- gmap +
+      ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE)
+    
+  }
   
   #I'd lay down the bathymetry first.
   if(is.list(bath)){
@@ -41,25 +64,7 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                                          size = bath$size)
   }
   
-  #This is for the vanilla map
-  if(style==1){
-    gmap <- gmap + geom_sf(fill= 'antiquewhite') +
-      ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE) +
-      ggplot2::xlab('Longitude') +
-      ggplot2::ylab('Latitude')
-  }
     
-  if(stateBorders){
-    # State boundaries
-    # map <- ggplot2::map_data("state")
-    # mapdata <- map[map$region%in%c("oregon", "washington"),]
-    
-    gmap <- gmap + 
-      # ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE) +
-      # ggplot2::coord_map()+
-      ggplot2::borders("state")
-
-  }
 
 
   #Return the ggplot object
