@@ -15,7 +15,7 @@
 #' @export baseMap
 #' 
 baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)), 
-                    bath = list(lat=c(44, 49.1), long=c(-126.15, -122.12), res=1, breaks=c(-100, -30), colour="grey", size=0.5),
+                    bath = list(res=1, breaks=c(-100, -30), colour="grey", size=0.5),
                     style = 1,
                     xlab = 'Longitude',
                     ylab = 'Latitude',
@@ -25,21 +25,21 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
   world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
   usa_states <- ne_states(country = 'United States of America', returnclass = 'sf')
   coast <- rnaturalearth::ne_coastline(scale = "large", returnclass = "sf")
-  b <- marmap::getNOAA.bathy(lon1 = bath$lon[1],
-                             lon2 = bath$lon[2],
-                             lat1 = bath$lat[1],
-                             lat2 = bath$lat[2],
+  b <- marmap::getNOAA.bathy(lon1 = coord_lim$lon[1],
+                             lon2 = coord_lim$lon[2],
+                             lat1 = coord_lim$lat[1],
+                             lat2 = coord_lim$lat[2],
                              resolution = bath$res)
   
   gmap <- ggplot2::ggplot(data = world) +
-    ggplot2::xlab('Longitude') +
-    ggplot2::ylab('Latitude')
+    ggplot2::xlab(xlab) +
+    ggplot2::ylab(ylab)
   
   
   #This is for the vanilla map
   if(style==1){
     gmap <- gmap + ggplot2::geom_sf(fill= 'antiquewhite') +
-            theme(panel.background = element_rect(fill = 'aliceblue'))
+            theme(panel.grid.major = element_blank(), panel.background = element_rect(fill = 'aliceblue'))
     
   } else if (style==2) {  # Uses bathymetry to color the land
     gmap <- gmap + ggplot2::geom_raster(data = b, aes(x=x, y=y, fill=z)) +
