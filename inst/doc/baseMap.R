@@ -32,6 +32,15 @@ print(p)
 #And this way you can easily manipulate the ggplot object
 p <- OEI::baseMap(stateBorders = TRUE,
                   bath = NA) +
+    # Grid lines
+    ggplot2::theme_bw()
+
+#Then print it
+print(p)
+
+## --------------------------------------------------------------------------------------------------
+#And this way you can easily manipulate the ggplot object
+p <- OEI::baseMap(style = 2, stateBorders = TRUE) +
   # # Grid lines
   ggplot2::theme_bw()
 

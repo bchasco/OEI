@@ -49,9 +49,23 @@ The state border don't overlap the 'world' borders. I'll have to figure this out
 #And this way you can easily manipulate the ggplot object
 p <- OEI::baseMap(stateBorders = TRUE,
                   bath = NA) +
+    # Grid lines
+    ggplot2::theme_bw()
+
+#Then print it
+print(p)
+```
+
+
+The state border borders and Brian's new background.
+
+```{r}
+#And this way you can easily manipulate the ggplot object
+p <- OEI::baseMap(style = 2, stateBorders = TRUE) +
   # # Grid lines
   ggplot2::theme_bw()
 
 #Then print it
 print(p)
 ```
+

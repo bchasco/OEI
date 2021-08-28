@@ -23,53 +23,55 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
   
   #Grab the spatial data you need
   world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
-  usa_states <- ne_states(country = 'United States of America', returnclass = 'sf')
+  usa_states <- rnaturalearth::ne_states(country = 'United States of America', returnclass = 'sf')
   coast <- rnaturalearth::ne_coastline(scale = "large", returnclass = "sf")
-  b <- marmap::getNOAA.bathy(lon1 = coord_lim$lon[1],
-                             lon2 = coord_lim$lon[2],
-                             lat1 = coord_lim$lat[1],
-                             lat2 = coord_lim$lat[2],
-                             resolution = bath$res)
   
   gmap <- ggplot2::ggplot(data = world) +
     ggplot2::xlab(xlab) +
     ggplot2::ylab(ylab)
-  
-  
-  #This is for the vanilla map
+  # 
+  # 
+  # #This is for the vanilla map
   if(style==1){
     gmap <- gmap + ggplot2::geom_sf(fill= 'antiquewhite') +
-            theme(panel.grid.major = element_blank(), panel.background = element_rect(fill = 'aliceblue'))
-    
-  } else if (style==2) {  # Uses bathymetry to color the land
-    gmap <- gmap + ggplot2::geom_raster(data = b, aes(x=x, y=y, fill=z)) +
-                   scale_fill_etopo()
-  }
-  
-  if(stateBorders){
-    # State boundaries
-    gmap <- gmap + 
-      ggplot2::geom_sf(data=usa_states, 
-                       colour = "grey40",
-                       fill=NA)
-  }
-  
-  if(is.list(coord_lim)){
-    gmap <- gmap +
-      ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE)
-    
-  }
-  
+            ggplot2::theme(panel.grid.major = ggplot2::element_blank(), 
+                           panel.background = ggplot2::element_rect(fill = 'aliceblue'))
+  } 
+
   #I'd lay down the bathymetry first.
   if(is.list(bath)){
     # Contour lines
-    gmap <- gmap + ggplot2::geom_contour(data=b, aes(x=x, y=y, z=z),
+    b <- marmap::getNOAA.bathy(lon1 = coord_lim$lon[1],
+                               lon2 = coord_lim$lon[2],
+                               lat1 = coord_lim$lat[1],
+                               lat2 = coord_lim$lat[2],
+                               resolution = bath$res)
+    
+    if(style==2) {  # Uses bathymetry to color the land
+      gmap <- gmap + ggplot2::geom_raster(data = b, 
+                                          ggplot2::aes(x=x, y=y, fill=z)) #+
+      # scale_fill_etopo()
+    }
+    
+    gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
                                          breaks = bath$breaks,
                                          colour = bath$colour,
                                          size = bath$size)
   }
   
-    
+  if(stateBorders){
+    # State boundaries
+    gmap <- gmap +
+      ggplot2::geom_sf(data=usa_states,
+                       colour = "grey40",
+                       fill=NA)
+  }
+
+  if(is.list(coord_lim)){
+    gmap <- gmap +
+      ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE)
+
+  }
 
 
   #Return the ggplot object

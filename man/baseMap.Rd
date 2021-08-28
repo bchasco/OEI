@@ -6,8 +6,7 @@
 \usage{
 baseMap(
   coord_lim = list(lat = c(44, 49.1), long = c(-126.15, -122.12)),
-  bath = list(lat = c(44, 49.1), long = c(-126.15, -122.12), res = 3, breaks = c(-100),
-    colour = "grey", size = 0.5),
+  bath = list(res = 1, breaks = c(-100, -30), colour = "grey", size = 0.5),
   style = 1,
   xlab = "Longitude",
   ylab = "Latitude",
@@ -19,7 +18,7 @@ baseMap(
 
 \item{bath}{a list of bathymetric coordinates for "lat" and "long", resolution, colour, and size}
 
-\item{style}{(1 = vanilla)}
+\item{style}{(1 = vanilla, 2 = bathymetry)}
 
 \item{xlab}{x-axis label}
 
