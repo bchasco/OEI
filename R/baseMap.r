@@ -53,6 +53,33 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
               marmap::scale_fill_etopo()
     }
     
+    if(style==3) {  # Uses getData to plot altitude
+      # usa_topo <- getData('alt', country='USA', level=1)
+      # can_topo <- getData('alt', country='CAN', level=1)
+      topo1 <- raster::getData('SRTM', lat=44, lon=-121)
+      topo2 <- raster::getData('SRTM', lat=46, lon=-121)
+      topo3 <- raster::getData('SRTM', lat=50, lon=-126)
+      topo <- raster::mosaic(topo1, topo2, topo3, fun=mean)
+      #create polygon to crop the elevation data file   
+      Ps1 = as(raster::extent(c(-128,-120,40,50)), 'SpatialPolygons')
+      raster::crs(Ps1) = "+proj=longlat +datum=WGS84 +no_defs"
+      #crop the elevation data using the polygon
+      topo = raster::crop(topo, Ps1, snap= 'out')
+      #lower the reolution to enable faster plotting
+      topo_lower_res <- raster::aggregate(topo, fact=5)
+      topo_pts <- data.frame(raster::rasterToPoints(topo_lower_res))
+      colnames(topo_pts) = c("x", "y", "z")
+      
+      gmap <- gmap + ggplot2::geom_raster(data = b, 
+                                          ggplot2::aes(x=x, y=y, fill=z)) +
+        marmap::scale_fill_etopo() +
+        ggplot2::geom_tile(data = topo_pts, 
+                                          ggplot2::aes(x=x, y=y, fill=z)) +
+        #ggplot2::scale_fill_gradientn(colours = terrain.colors(10)) +
+        ggplot2::theme(panel.grid.major = ggplot2::element_blank(), 
+                       panel.background = ggplot2::element_rect(fill = 'aliceblue'))
+    }
+
     gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
                                          breaks = bath$breaks,
                                          colour = bath$colour,
