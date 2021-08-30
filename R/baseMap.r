@@ -49,8 +49,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
     
     if(style==2) {  # Uses bathymetry to color the land
       gmap <- gmap + ggplot2::geom_raster(data = b, 
-                                          ggplot2::aes(x=x, y=y, fill=z)) #+
-      # scale_fill_etopo()
+                                          ggplot2::aes(x=x, y=y, fill=z)) +
+              ggplot2::scale_fill_etopo()
     }
     
     gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
