@@ -74,10 +74,10 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                                           ggplot2::aes(x=x, y=y, fill=z)) +
         marmap::scale_fill_etopo() +
         ggplot2::geom_tile(data = topo_pts, 
-                                          ggplot2::aes(x=x, y=y, fill=z)) +
+                                          ggplot2::aes(x=x, y=y, fill=z)) #+
         #ggplot2::scale_fill_gradientn(colours = terrain.colors(10)) +
-        ggplot2::theme(panel.grid.major = ggplot2::element_blank(), 
-                       panel.background = ggplot2::element_rect(fill = 'aliceblue'))
+        # ggplot2::theme(panel.grid.major = ggplot2::element_blank(), 
+        #                panel.background = ggplot2::element_rect(fill = 'aliceblue'))
     }
 
     gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
