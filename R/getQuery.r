@@ -3,27 +3,23 @@
 #'getQuery
 #'@param uid User ID
 #'@param pwd Default password
-#'@param db Database name
-#'@param qryName The name of a pre-built query in the database
-#'@return query A query from the list of queries that have already been built.
+#'@param myQry A string representing a syntactically correct sql query
+#'@return a data fraem with results from the query
 #'@export
 getQuery <- function(uid = uid,
                     pwd = pwd,
-                    db = db,
-                    qryName = NA){
+                    myQry = NA){
   
   #Create the channel first
-  channel <- RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
+  channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
   
-  #Available queries 
-  availableQueries <- getQueryList()
+  tab <- tryCatch(RODBC::sqlQuery(channel, myQry, FALSE), #FALSE is for RODBC error handling
+                  error = function(e) e) #Dummy error
   
-  #Read the available query names in the database
-  if(qryName%in%availableQueries){
-    query <- readQuery(channel, qryName)
-    return(query)
+  # Output
+  if(is.null(dim(tab))){ # -1 if RODBC throws an error
+    cat("Error: make sure the syntax is correct")
   }else{
-    print("The are the available queries for your user account. \n Please choose one.")
-    print(query)
+    return(tab)    
   }
 }
