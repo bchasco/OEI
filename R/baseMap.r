@@ -7,6 +7,7 @@
 #'@param ylab y-axis label
 #'@param style (1 = vanilla, 2 = bathymetry)
 #'@param stateBorders a vector of state borders c('washington','oregon') *no caps
+#'@param wc_zm zoom level for style 4 watercolor map
 #'
 #'@return ggplot map object
 #'
@@ -19,7 +20,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     style = 1,
                     xlab = 'Longitude',
                     ylab = 'Latitude',
-                    stateBorders = FALSE){
+                    stateBorders = FALSE,
+                    wc_zm=8){
   
   #Grab the spatial data you need
   world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
@@ -97,8 +99,7 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
   #  because it does not play well with them.
   if(style==4) {  # Creates a ggmap object and plots watercolor
     bbox <- c(left = coord_lim$long[1], bottom = coord_lim$lat[1], right = coord_lim$long[2], top = coord_lim$lat[2])
-    zm<-8
-    wc_map<-ggmap::get_stamenmap(bbox, zoom=zm, maptype = "watercolor")
+    wc_map<-ggmap::get_stamenmap(bbox, zoom=wc_zm, maptype = "watercolor")
     gmap <- ggmap::ggmap(wc_map) +
       ggplot2::xlab(xlab) +
       ggplot2::ylab(ylab)

@@ -16,6 +16,8 @@ getQuery <- function(uid = uid,
   tab <- tryCatch(RODBC::sqlQuery(channel, myQry, FALSE), #FALSE is for RODBC error handling
                   error = function(e) e) #Dummy error
   
+  RODBC::odbcClose()
+  
   # Output
   if(is.null(dim(tab))){ # -1 if RODBC throws an error
     cat("Error: make sure the syntax is correct")
