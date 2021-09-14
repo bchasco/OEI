@@ -95,6 +95,11 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
 
   }
 
+  if(bath[[1]]) gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
+                                                     breaks = bath$breaks,
+                                                     colour = bath$colour,
+                                                     size = bath$size)
+  
   # Style 4 has to come after the state boundary and coord_sf
   #  because it does not play well with them.
   if(style==4) {  # Creates a ggmap object and plots watercolor
@@ -104,11 +109,6 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
       ggplot2::xlab(xlab) +
       ggplot2::ylab(ylab)
   }
-  
-  if(bath[[1]]) gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
-                                                     breaks = bath$breaks,
-                                                     colour = bath$colour,
-                                                     size = bath$size)
   
   #Return the ggplot object
   return(gmap)
