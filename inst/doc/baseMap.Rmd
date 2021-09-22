@@ -53,12 +53,12 @@ We also have some shapefiles we can add:
 ```{r fig.width=4, fig.height=5}
 
 # And a shapefile
-myPath<-file.path(paste0(normalizePath(".."),
+myPath<-file.path(paste0(here::here(),
                          "\\data\\shapefiles\\ne_10m_rivers_lake_centerlines.shp"))
 rivers <- rgdal::readOGR(myPath)
 f_rivers1<-ggplot2::fortify(rivers)
 
-myPath<-file.path(paste0(normalizePath(".."),
+myPath<-file.path(paste0(here::here(),
                          "\\data\\shapefiles\\ne_10m_rivers_north_america.shp"))
 rivers <- rgdal::readOGR(myPath)
 f_rivers2<-ggplot2::fortify(rivers)
@@ -70,6 +70,24 @@ p1.shape<- p1 +
                    mapping=ggplot2::aes(x=long, y=lat, group=group), color="blue")
 
 p1.shape
+  
+```
+
+And we can zoom in to any extent we want.  Here's I've increased the zoom level for the watercolor map (style=4):
+
+```{r fig.width=8, fig.height=7}
+
+extent<-list(lat = c(46, 46.5), long = c(-124.3, -122.9))
+
+# Styles
+z1 <- OEI::baseMap(style = 1, coord_lim = extent) + ggplot2::ggtitle('Style 1')
+z2 <- OEI::baseMap(style = 2, coord_lim = extent) + ggplot2::ggtitle('Style 2')
+z3 <- OEI::baseMap(style = 3, coord_lim = extent) + ggplot2::ggtitle('Style 3')
+z4 <- OEI::baseMap(style = 4, coord_lim = extent, wc_zm = 10) + ggplot2::ggtitle('Style 4')
+
+# And print them
+figure <- gridExtra::grid.arrange(z1, z2, z3, z4, ncol = 2)
+figure
   
 ```
 

@@ -8,6 +8,7 @@
 #'@param style (1 = vanilla, 2 = bathymetry)
 #'@param stateBorders a vector of state borders c('washington','oregon') *no caps
 #'@param wc_zm zoom level for style 4 watercolor map
+#'@param legend for raster maps, should we show the legend? logical (T/F)
 #'
 #'@return ggplot map object
 #'
@@ -21,7 +22,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     xlab = 'Longitude',
                     ylab = 'Latitude',
                     stateBorders = FALSE,
-                    wc_zm=8){
+                    wc_zm=8,
+                    legend=FALSE){
   
   #Grab the spatial data you need
   world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
@@ -51,7 +53,7 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
   } 
 
   if(style==2) {  # Uses bathymetry to color the land
-    gmap <- gmap + ggplot2::geom_raster(data = b, 
+    gmap <- gmap + ggplot2::geom_raster(data = b, show.legend = legend,
                                         ggplot2::aes(x=x, y=y, fill=z)) +
             marmap::scale_fill_etopo()
   }
@@ -71,10 +73,10 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
     topo_pts <- data.frame(raster::rasterToPoints(topo_lower_res))
     colnames(topo_pts) = c("x", "y", "z")
     
-    gmap <- gmap + ggplot2::geom_raster(data = b, 
+    gmap <- gmap + ggplot2::geom_raster(data = b, show.legend = legend,
                                         ggplot2::aes(x=x, y=y, fill=z)) +
       marmap::scale_fill_etopo() +
-      ggplot2::geom_tile(data = topo_pts, 
+      ggplot2::geom_tile(data = topo_pts, show.legend = legend, 
                                         ggplot2::aes(x=x, y=y, fill=z)) #+
       #ggplot2::scale_fill_gradientn(colours = terrain.colors(10)) +
       # ggplot2::theme(panel.grid.major = ggplot2::element_blank(), 
@@ -98,7 +100,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
   if(bath[[1]]) gmap <- gmap + ggplot2::geom_contour(data=b, ggplot2::aes(x=x, y=y, z=z),
                                                      breaks = bath$breaks,
                                                      colour = bath$colour,
-                                                     size = bath$size)
+                                                     size = bath$size,
+                                                     show.legend = legend)
   
   # Style 4 has to come after the state boundary and coord_sf
   #  because it does not play well with them.
