@@ -5,6 +5,7 @@
 #'@param bath a list of bathymetric coordinates for "lat" and "long", resolution, colour, and size
 #'@param xlab x-axis label
 #'@param ylab y-axis label
+#'@param main main title for the plot
 #'@param style (1 = vanilla, 2 = bathymetry)
 #'@param stateBorders a vector of state borders c('washington','oregon') *no caps
 #'@param wc_zm zoom level for style 4 watercolor map
@@ -21,6 +22,7 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     style = 1,
                     xlab = 'Longitude',
                     ylab = 'Latitude',
+                    main = '',
                     stateBorders = FALSE,
                     wc_zm=8,
                     legend=FALSE){
@@ -43,7 +45,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
   # Create the base map  
   gmap <- ggplot2::ggplot(data = world) +
     ggplot2::xlab(xlab) +
-    ggplot2::ylab(ylab)
+    ggplot2::ylab(ylab) +
+    ggplot2::ggtitle(main)
 
   # This is for the vanilla map
   if(style==1){
@@ -110,7 +113,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
     wc_map<-ggmap::get_stamenmap(bbox, zoom=wc_zm, maptype = "watercolor")
     gmap <- ggmap::ggmap(wc_map) +
       ggplot2::xlab(xlab) +
-      ggplot2::ylab(ylab)
+      ggplot2::ylab(ylab) +
+      ggplot2::ggtitle(main)
   }
   
   #Return the ggplot object
