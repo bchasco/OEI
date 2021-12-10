@@ -22,7 +22,6 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     style = 1,
                     xlab = 'Longitude',
                     ylab = 'Latitude',
-                    stateBorders = FALSE,
                     main = '',
                     stateBorders = FALSE,
                     countryBorders = FALSE,
@@ -88,13 +87,6 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
       #                panel.background = ggplot2::element_rect(fill = 'aliceblue'))
   }
 
-  if(stateBorders){
-    # State boundaries
-    gmap <- gmap +
-      ggplot2::geom_sf(data=usa_states,
-                       colour = "grey40",
-                       fill="grey") #Change back to NA when done playing
-  }
 
   if(countryBorders){
     # State boundaries
@@ -104,6 +96,13 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                        fill="grey") #Change back to NA when done playing
   }
   
+  if(stateBorders){
+    # State boundaries
+    gmap <- gmap +
+      ggplot2::geom_sf(data=usa_states,
+                       colour = "grey40",
+                       fill="grey") #Change back to NA when done playing
+  }
   if(is.list(coord_lim)){
     gmap <- gmap +
       ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE)

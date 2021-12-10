@@ -4,19 +4,17 @@
 \alias{getQuery}
 \title{Read in information from database using}
 \usage{
-getQuery(uid = uid, pwd = pwd, db = db, qryName = NA)
+getQuery(uid = uid, pwd = pwd, myQry = NA)
 }
 \arguments{
 \item{uid}{User ID}
 
 \item{pwd}{Default password}
 
-\item{db}{Database name}
-
-\item{qryName}{The name of a pre-built query in the database}
+\item{myQry}{A string representing a syntactically correct sql query}
 }
 \value{
-query A query from the list of queries that have already been built.
+a data fraem with results from the query
 }
 \description{
 getQuery

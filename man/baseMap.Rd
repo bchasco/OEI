@@ -6,12 +6,16 @@
 \usage{
 baseMap(
   coord_lim = list(lat = c(44, 49.1), long = c(-126.15, -122.12)),
-  bath = list(res = 1, breaks = c(-100, -30), colour = "grey", size = 0.5),
+  bath = list(include = TRUE, res = 1, breaks = c(-100, -30), colour = "grey", size =
+    0.5),
   style = 1,
   xlab = "Longitude",
   ylab = "Latitude",
+  main = "",
   stateBorders = FALSE,
-  countryBorders = FALSE
+  countryBorders = FALSE,
+  wc_zm = 8,
+  legend = FALSE
 )
 }
 \arguments{
@@ -25,7 +29,13 @@ baseMap(
 
 \item{ylab}{y-axis label}
 
+\item{main}{main title for the plot}
+
 \item{stateBorders}{a vector of state borders c('washington','oregon') *no caps}
+
+\item{wc_zm}{zoom level for style 4 watercolor map}
+
+\item{legend}{for raster maps, should we show the legend? logical (T/F)}
 }
 \value{
 ggplot map object
