@@ -10,7 +10,8 @@ baseMap(
   style = 1,
   xlab = "Longitude",
   ylab = "Latitude",
-  stateBorders = FALSE
+  stateBorders = FALSE,
+  countryBorders = FALSE
 )
 }
 \arguments{

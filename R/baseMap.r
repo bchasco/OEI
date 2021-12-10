@@ -19,7 +19,8 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     style = 1,
                     xlab = 'Longitude',
                     ylab = 'Latitude',
-                    stateBorders = FALSE){
+                    stateBorders = FALSE,
+                    countryBorders = FALSE){
   
   #Grab the spatial data you need
   world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
@@ -64,9 +65,17 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
     gmap <- gmap +
       ggplot2::geom_sf(data=usa_states,
                        colour = "grey40",
-                       fill=NA)
+                       fill="grey") #Change back to NA when done playing
   }
 
+  if(countryBorders){
+    # State boundaries
+    gmap <- gmap +
+      ggplot2::geom_sf(data=world,
+                       colour = "grey40",
+                       fill="grey") #Change back to NA when done playing
+  }
+  
   if(is.list(coord_lim)){
     gmap <- gmap +
       ggplot2::coord_sf(xlim = coord_lim$long, ylim = coord_lim$lat, expand = FALSE)
