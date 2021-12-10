@@ -22,16 +22,13 @@ baseMap <- function(coord_lim = list(lat=c(44, 49.1), long=c(-126.15, -122.12)),
                     style = 1,
                     xlab = 'Longitude',
                     ylab = 'Latitude',
-<<<<<<< HEAD
                     stateBorders = FALSE,
-                    countryBorders = FALSE){
-=======
                     main = '',
                     stateBorders = FALSE,
+                    countryBorders = FALSE,
                     wc_zm=8,
                     legend=FALSE){
->>>>>>> 643ab7854575736f53803537bdc749dcd727da3f
-  
+
   #Grab the spatial data you need
   world <- rnaturalearth::ne_countries(continent='north america', scale = "large", returnclass = "sf")
   usa_states <- rnaturalearth::ne_states(country = 'United States of America', returnclass = 'sf')
