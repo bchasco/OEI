@@ -2,8 +2,7 @@
 % Please edit documentation in R/getERDDAP.r
 \name{getERDDAP}
 \alias{getERDDAP}
-\title{Get an ERDDAP file
-getERDAPP}
+\title{Get an ERDDAP file}
 \usage{
 getERDDAP(var = NULL)
 }
@@ -15,8 +14,15 @@ ERDDAP data.frame
 }
 \description{
 Get an ERDDAP file
-getERDAPP
 }
 \examples{
+#if you don't know the name of an erddap fileset just type
+#and you'll be prompted to choose a fileset
+getERDDAP()
+#you can either enter the row number that you're interested in 
+#or you can type something like 'PDO', and it will search the list for the PDO filesets
+#Alternatively,
+#If you don't want to look through all of the file sets, you just type
 x <- getERDDAP(var='cciea')
+#and you'll be asked to choose a row from the listed cciea filesets
 }
