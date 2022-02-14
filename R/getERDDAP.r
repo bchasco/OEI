@@ -1,4 +1,10 @@
-getERDAPP <- function(var = NULL){
+#'Get an ERDDAP file
+#'getERDAPP
+#'@param var=NULL Dataset ID for an erddap file (see 'https://oceanview.pfeg.noaa.gov/erddap/info/index.html?page=1&itemsPerPage=1000')  
+#'@return ERDDAP data.frame
+#'@examples x <- getERDDAP(var='cciea')
+#' @export getERDDAP
+getERDDAP <- function(var = NULL){
   #Read in the table contents
   content <- rvest::read_html("https://oceanview.pfeg.noaa.gov/erddap/info/index.html?page=1&itemsPerPage=1000")
   tableDAP <- content %>% rvest::html_table(fill = TRUE)
