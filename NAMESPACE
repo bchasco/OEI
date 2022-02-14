@@ -2,6 +2,7 @@
 
 export(baseMap)
 export(connectDb)
+export(getERDAPP)
 export(getQuery)
 export(getTable)
 export(oeiplot)
