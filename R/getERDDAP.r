@@ -14,7 +14,7 @@
 getERDDAP <- function(var = NULL){
   #Read in the table contents
   content <- rvest::read_html("https://oceanview.pfeg.noaa.gov/erddap/info/index.html?page=1&itemsPerPage=1000")
-  tableDAP <- content %>% rvest::html_table(fill = TRUE)
+  tableDAP <- rvest::html_table(content,fill = TRUE)
   dataID <- as.data.frame(tableDAP[[2]]$'Dataset ID')
   print("test")
   if(is.null(var)){
@@ -41,7 +41,7 @@ getERDDAP <- function(var = NULL){
   dataSet <- tableDAP[[2]]$'Dataset ID'[varVal]
 
   varDAP <- rvest::read_html(paste0("https://oceanview.pfeg.noaa.gov/erddap/info/",dataSet,"/index.html"))
-  varTable <- varDAP %>% rvest::html_table(fill = TRUE)
+  varTable <- rvest::html_table(varDAP,fill = TRUE)
   varNames <- unique(varTable[[3]]$`Variable Name`)
   
   
