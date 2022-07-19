@@ -29,15 +29,15 @@ getCPUE <- function(uid = uid,
   channel <-   RODBC::odbcConnect("NWFSC_OCEAN", uid=uid, pwd=pwd)
   
   # Target stations
-  JSOES_stations<-getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
+  JSOES_stations<-OEI::getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
                            tableName = "JSOES_Target_Stations")
   # Get unique station codes
   #myStations<-getQuery(uid = uid, pwd = pwd, myQry = 'select distinct [Station Code] from crepo.[Trawl Contents]')
-  myStations1<-getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
+  myStations1<-OEI::getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
                         tableName = "Trawl Info")
-  myStations2<-getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
+  myStations2<-OEI::getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
                         tableName = "Station Info")
-  myStations3<-getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
+  myStations3<-OEI::getTable(uid = uid, pwd = pwd, schemaName = 'crepo',
                         tableName = "Cruise_List")
   myStations<-merge(myStations1, myStations2, by=c("Station Code", "Cruise #"))
   myStations<-merge(myStations, myStations3, by = "Cruise #")
@@ -49,7 +49,7 @@ getCPUE <- function(uid = uid,
   
   
   # get total number of individuals for all species
-  speciesCounts<-getTable(uid = uid, pwd = pwd,
+  speciesCounts<-OEI::getTable(uid = uid, pwd = pwd,
                           schemaName = 'dbo',
                           tableName = 'V_total_count_by_species_age')
   # Refine to just the data/species we want
