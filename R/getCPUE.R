@@ -9,7 +9,7 @@
 #'@param goodHaul use data from good hauls only?
 #'@param day use hauls from daytime only?
 #'@return table A data.frame with the CPUE data from the selected species
-#'@export
+#'@export getCPUE
 getCPUE <- function(uid = uid,
                      pwd = pwd,
                      db = "NWFSC_OCEAN",
