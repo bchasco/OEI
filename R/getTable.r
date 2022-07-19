@@ -8,7 +8,7 @@
 #'@param conditions use for the where clause in sql 
 #'@param remove_dup logical indicating whether the query should remove duplicate results 
 #'@return table A table from the list of tables that have already been built.
-#'@export
+#'@export getTable
 getTable <- function(uid = uid,
                      pwd = pwd,
                      db = "NWFSC_OCEAN",

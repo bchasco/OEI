@@ -5,7 +5,7 @@
 #'@param pwd Default passwoed
 #'@param db Database name
 #'@return channel A channel that can be passed to other functions that allows you to query the database
-#'@export
+#'@export connectDb
 connectDb <- function(uid = default, 
                       pwd = default, 
                       db = default){
