@@ -5,7 +5,7 @@ Version: 0.0.1
 License: My license
 Author: Brandon Chasco <brandon.chasco@noaa.gov>
 Maintainer: Brandon Chasco <brandon.chasco@noaa.gov>
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 VignetteBuilder: knitr
 Imports:
     RODBC,
@@ -22,4 +22,3 @@ Imports:
     marmap,
     gridExtra,
     doBy
-

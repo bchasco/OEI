@@ -2,6 +2,7 @@
 
 export(baseMap)
 export(connectDb)
+export(getCPUE)
 export(getERDDAP)
 export(getQuery)
 export(getTable)
