@@ -19,5 +19,7 @@ Imports:
     ggspatial,
     rnaturalearth,
     rnaturalearthdata,
-    marmap
+    marmap,
+    gridExtra,
+    doBy
 
