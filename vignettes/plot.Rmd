@@ -32,7 +32,7 @@ myDataFrame <- data.frame(y = rnorm(100)
                           ,x = sample(1998:2021,100,replace=TRUE)
                           #,Index = sample(c("SST","NPI","PTSD"), 100, replace=TRUE)
                           )
-OEI::plot(myDataFrame)
+OEI::oeiplot(myDataFrame)
 
 ```
 
@@ -48,7 +48,7 @@ myDataFrame <- data.frame(y = rnorm(100)
                           ,x = sample(1998:2021,100,replace=TRUE)
                           ,Index = sample(c("SST","NPI","PTSD"), 100, replace=TRUE)
                           )
-OEI::plot(myDataFrame)
+OEI::oeiplot(myDataFrame)
 
 ```
 
@@ -65,6 +65,6 @@ myDataFrame <- data.frame(y = rnorm(100)
                           ,x = sample(1998:2021,100,replace=TRUE)
                           ,Index = sample(c("SST","NPI","PTSD"), 100, replace=TRUE)
                           )
-OEI::plot(myDataFrame, multipane = TRUE)
+OEI::oeiplot(myDataFrame, multipane = TRUE)
 
 ```
