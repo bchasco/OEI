@@ -10,7 +10,7 @@
 #'@param day use hauls from daytime only?
 #'@return table A data.frame with the CPUE data from the selected species
 #'@export
-getTable <- function(uid = uid,
+getCPUE <- function(uid = uid,
                      pwd = pwd,
                      db = "NWFSC_OCEAN",
                      species = data.frame(commonName="Chinook salmon", Age_ClassByLength="yearling"),
