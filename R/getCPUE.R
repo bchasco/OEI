@@ -8,15 +8,17 @@
 #'@param studyType most likely 'Regular', but could also include 'Maximize Catch'
 #'@param goodHaul use data from good hauls only?
 #'@param day use hauls from daytime only?
+#'@param includeRepeats include cpue from repeat trawls?
 #'@return table A data.frame with the CPUE data from the selected species
 #'@export getCPUE
 getCPUE <- function(uid = uid,
-                     pwd = pwd,
-                     db = "NWFSC_OCEAN",
-                     species = data.frame(commonName="Chinook salmon", Age_ClassByLength="yearling"),
-                     studyType = c('Regular','Maximize Catch'),
-                     goodHaul = TRUE,
-                     day = TRUE) {
+                    pwd = pwd,
+                    db = "NWFSC_OCEAN",
+                    species = data.frame(commonName="Chinook salmon", Age_ClassByLength="yearling"),
+                    studyType = c('Regular','Maximize Catch'),
+                    goodHaul = TRUE,
+                    day = TRUE,
+                    includeRepeats=TRUE) {
 
   # Make sure the species list is the correct format
   if(!is.data.frame(species)){ 
@@ -41,11 +43,18 @@ getCPUE <- function(uid = uid,
                         tableName = "Cruise_List")
   myStations<-merge(myStations1, myStations2, by=c("Station Code", "Cruise #"))
   myStations<-merge(myStations, myStations3, by = "Cruise #")
+  # Refine rows
   myStations<-myStations[myStations$GoodHaul==goodHaul &
                            myStations$Day==day &
-                           myStations$`Study Type` %in% studyType,
-                         c("Station Code","Year","Month","Trawling distance (km)")]
-  colnames(myStations)<-c("Station Code","Year","Month","distTowed")
+                           myStations$`Study Type` %in% studyType,]
+  if (!includeRepeats) myStations<-myStations[myStations$Repeat==0 &
+                                                myStations$`Nonconsecutive Repeat`==0,]
+  # Refine cols
+  myStations<-myStations[,c("Station Code","Year","Month","Trawling distance (km)",
+                            "GoodHaul","Day","Repeat","Nonconsecutive Repeat","Study Type")]
+
+  colnames(myStations)<-c("Station Code","Year","Month","distTowed",
+                          "GoodHaul","Day","Repeat","NonconsecRepeat","StudyType")
  
   # Add Station
   myStations$Station<-substr(myStations$`Station Code`, 7, 10)
@@ -83,7 +92,7 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 6:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
+  for (cc in 11:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
