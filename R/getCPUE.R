@@ -46,7 +46,9 @@ getCPUE <- function(uid = uid,
                            myStations$`Study Type` %in% studyType,
                          c("Station Code","Year","Month","Trawling distance (km)")]
   colnames(myStations)<-c("Station Code","Year","Month","distTowed")
-  
+ 
+  # Add Station
+  myStations$Station<-substr(myStations$`Station Code`, 7, 10)
   
   # get total number of individuals for all species
   speciesCounts<-OEI::getTable(uid = uid, pwd = pwd,
@@ -81,13 +83,10 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 5:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
+  for (cc in 6:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
-  
-  # Add Station
-  myData$Station<-substr(myData$`Station Code`, 7, 10)
   
   #Return the data.frame object
   return(myData)
