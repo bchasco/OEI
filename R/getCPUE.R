@@ -56,10 +56,10 @@ getCPUE <- function(uid = uid,
   if (!includeRepeats) myStations<-myStations[myStations$Repeat==0 &
                                                 myStations$`Nonconsecutive Repeat`==0,]
   # Refine cols
-  myStations<-myStations[,c("Station Code","Year","Month","lat","long","Trawling distance (km)",
+  myStations<-myStations[,c("Station Code","Station","Year","Month","lat","long","Trawling distance (km)",
                             "GoodHaul","Day","Repeat","Nonconsecutive Repeat","Study Type")]
 
-  colnames(myStations)<-c("Station Code","Year","Month","lat","long","distTowed",
+  colnames(myStations)<-c("Station Code","Station","Year","Month","lat","long","distTowed",
                           "GoodHaul","Day","Repeat","NonconsecRepeat","StudyType")
  
   # get total number of individuals for all species
@@ -95,7 +95,7 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 12:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
+  for (cc in 13:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
