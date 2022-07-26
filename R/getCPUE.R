@@ -95,7 +95,13 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 13:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
+  for (cc in 13:ncol(myData)) {
+    myData[,cc]<-myData[,cc]/myData$distTowed
+    # remove the NA after non-salmonid names
+    myName<-colnames(myData)[cc]
+    if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
+      colnames(myData)[cc]<-substr(myName, 1, nchar(myName)-3)
+  }
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
