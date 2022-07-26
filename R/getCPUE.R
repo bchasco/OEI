@@ -95,10 +95,13 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 13:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
+  for (cc in 12:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
+  
+  # Close connections
+  RODBC::odbcCloseAll()
   
   #Return the data.frame object
   return(myData)
