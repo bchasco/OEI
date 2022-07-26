@@ -43,6 +43,12 @@ getCPUE <- function(uid = uid,
                         tableName = "Cruise_List")
   myStations<-merge(myStations1, myStations2, by=c("Station Code", "Cruise #"))
   myStations<-merge(myStations, myStations3, by = "Cruise #")
+  # Add Station
+  myStations$Station<-substr(myStations$`Station Code`, 7, 10)
+  # Add basic lat and long
+  myStations<-merge(myStations, JSOES_stations[,c("Station","Dec Lat","Dec Long")], all.x=TRUE)
+  colnames(myStations)[c(ncol(myStations)-1, ncol(myStations))]<-c("lat","long")
+  
   # Refine rows
   myStations<-myStations[myStations$GoodHaul==goodHaul &
                            myStations$Day==day &
@@ -50,15 +56,12 @@ getCPUE <- function(uid = uid,
   if (!includeRepeats) myStations<-myStations[myStations$Repeat==0 &
                                                 myStations$`Nonconsecutive Repeat`==0,]
   # Refine cols
-  myStations<-myStations[,c("Station Code","Year","Month","Trawling distance (km)",
+  myStations<-myStations[,c("Station Code","Year","Month","lat","long","Trawling distance (km)",
                             "GoodHaul","Day","Repeat","Nonconsecutive Repeat","Study Type")]
 
-  colnames(myStations)<-c("Station Code","Year","Month","distTowed",
+  colnames(myStations)<-c("Station Code","Year","Month","lat","long","distTowed",
                           "GoodHaul","Day","Repeat","NonconsecRepeat","StudyType")
  
-  # Add Station
-  myStations$Station<-substr(myStations$`Station Code`, 7, 10)
-  
   # get total number of individuals for all species
   speciesCounts<-OEI::getTable(uid = uid, pwd = pwd,
                           schemaName = 'dbo',
@@ -92,7 +95,7 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 11:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
+  for (cc in 13:ncol(myData)) myData[,cc]<-myData[,cc]/myData$distTowed
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
