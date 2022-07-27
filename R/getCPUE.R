@@ -99,10 +99,6 @@ getCPUE <- function(uid = uid,
   # Divide counts by distTowed
   for (cc in 13:ncol(myData)) {
     myData[,cc]<-myData[,cc]/myData$distTowed
-    # remove the NA after non-salmonid names
-    myName<-colnames(myData)[cc]
-    if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
-      colnames(myData)[cc]<-substr(myName, 1, nchar(myName)-3)
   }
   
   # Convert all NAs to 0s
@@ -114,7 +110,21 @@ getCPUE <- function(uid = uid,
     myData <- dplyr::group_by(myData, Station, Year, Month)
     myData <- dplyr::summarise_at(myData, dplyr::vars(dplyr::all_of(vars2ave)), mean)
     myData <- as.data.frame(myData) # Otherwise it's a tibble and I don't understand those
+    # remove the NA after non-salmonid names
+    for (cc in 6:ncol(myData)) {
+      myName<-colnames(myData)[cc]
+      if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
+        colnames(myData)[cc]<-substr(myName, 1, nchar(myName)-3)
+    }
+  } else { # I had to do this again, for when repeats aren't averaged - there's a different number of columns returned
+    # remove the NA after non-salmonid names
+    for (cc in 13:ncol(myData)) {
+      myName<-colnames(myData)[cc]
+      if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
+        colnames(myData)[cc]<-substr(myName, 1, nchar(myName)-3)
+    }
   }
+  
   
   # Close connections
   RODBC::odbcCloseAll()
