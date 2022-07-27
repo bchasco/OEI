@@ -58,10 +58,10 @@ getCPUE <- function(uid = uid,
   if (!includeRepeats) myStations<-myStations[myStations$Repeat==0 &
                                                 myStations$`Nonconsecutive Repeat`==0,]
   # Refine cols
-  myStations<-myStations[,c("Station Code","Station","Year","Month","lat","long","Trawling distance (km)",
+  myStations<-myStations[,c("Station Code","Station","Year","Month","Depth (m)", "lat","long","Trawling distance (km)",
                             "GoodHaul","Day","Repeat","Nonconsecutive Repeat","Study Type")]
 
-  colnames(myStations)<-c("Station Code","Station","Year","Month","lat","long","distTowed",
+  colnames(myStations)<-c("Station Code","Station","Year","Month","Depth","lat","long","distTowed",
                           "GoodHaul","Day","Repeat","NonconsecRepeat","StudyType")
  
   # get total number of individuals for all species
@@ -97,7 +97,7 @@ getCPUE <- function(uid = uid,
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
   # Divide counts by distTowed
-  for (cc in 13:ncol(myData)) {
+  for (cc in 14:ncol(myData)) {
     myData[,cc]<-myData[,cc]/myData$distTowed
   }
   
@@ -106,7 +106,7 @@ getCPUE <- function(uid = uid,
   
   if (averageRepeats) {
     # This ignores the fact that some repeats are nonconsecutive
-    vars2ave<-colnames(myData)[c(5,6,13:ncol(myData))]
+    vars2ave<-colnames(myData)[c(6,7,14:ncol(myData))]
     myData <- dplyr::group_by(myData, Station, Year, Month)
     myData <- dplyr::summarise_at(myData, dplyr::vars(dplyr::all_of(vars2ave)), mean)
     myData <- as.data.frame(myData) # Otherwise it's a tibble and I don't understand those
@@ -118,7 +118,7 @@ getCPUE <- function(uid = uid,
     }
   } else { # I had to do this again, for when repeats aren't averaged - there's a different number of columns returned
     # remove the NA after non-salmonid names
-    for (cc in 13:ncol(myData)) {
+    for (cc in 14:ncol(myData)) {
       myName<-colnames(myData)[cc]
       if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
         colnames(myData)[cc]<-substr(myName, 1, nchar(myName)-3)
