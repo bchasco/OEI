@@ -11,7 +11,10 @@ getCPUE(
   species = data.frame(commonName = "Chinook salmon", Age_ClassByLength = "yearling"),
   studyType = c("Regular", "Maximize Catch"),
   goodHaul = TRUE,
-  day = TRUE
+  day = TRUE,
+  includeRepeats = TRUE,
+  averageRepeats = FALSE,
+  logData = "natural"
 )
 }
 \arguments{
@@ -23,14 +26,20 @@ getCPUE(
 
 \item{species}{a list of species (commonName and Age_ClassByLength)}
 
-\item{studyType}{most likely 'Regular', but could also include 'Maximize Catch'}
+\item{studyType}{most likely 'Regular' or 'Maximize Catch'}
 
 \item{goodHaul}{use data from good hauls only?}
 
 \item{day}{use hauls from daytime only?}
+
+\item{includeRepeats}{include cpue from repeat trawls?}
+
+\item{averageRepeats}{average cpue from all repeat (including nonconsecutive) trawls? This will provide station level data, not haul level data.}
+
+\item{logData}{use 'N', 'natural', or 'base10'}
 }
 \value{
-table A data.frame with the CPUE data from the selected species
+A data.frame with the CPUE data from the selected species
 }
 \description{
 getCPUE
