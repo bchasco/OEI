@@ -10,6 +10,7 @@
 #'@param day use hauls from daytime only?
 #'@param includeRepeats include cpue from repeat trawls?
 #'@param averageRepeats average cpue from all repeat (including nonconsecutive) trawls? This will provide station level data, not haul level data.
+#'@param logData use 'N', 'natural', or 'base10'
 #'@return A data.frame with the CPUE data from the selected species
 #'@export getCPUE
 getCPUE <- function(uid = uid,
@@ -20,7 +21,8 @@ getCPUE <- function(uid = uid,
                     goodHaul = TRUE,
                     day = TRUE,
                     includeRepeats=TRUE,
-                    averageRepeats=FALSE) {
+                    averageRepeats=FALSE,
+                    logData = "natural") {
 
   # Make sure the species list is the correct format
   if(!is.data.frame(species)){ 
@@ -96,9 +98,11 @@ getCPUE <- function(uid = uid,
   # merge counts with Trawl Info to get km towed
   myData<-merge(myStations, msc_wide, all.x = TRUE)
   
-  # Divide counts by distTowed
+  # Divide counts by distTowed and log if requested
   for (cc in 14:ncol(myData)) {
     myData[,cc]<-myData[,cc]/myData$distTowed
+    if (logData == 'natural') myData[,cc]<-log(myData[,cc]+1)
+    if (logData == 'base10') myData[,cc]<-log10(myData[,cc]+1)
   }
   
   # Convert all NAs to 0s
@@ -110,7 +114,7 @@ getCPUE <- function(uid = uid,
     myData <- dplyr::group_by(myData, Station, Year, Month, Depth)
     myData <- dplyr::summarise_at(myData, dplyr::vars(dplyr::all_of(vars2ave)), mean)
     myData <- as.data.frame(myData) # Otherwise it's a tibble and I don't understand those
-    # remove the NA after non-salmonid names
+    # remove the NA after non-salmonid names 
     for (cc in 7:ncol(myData)) {
       myName<-colnames(myData)[cc]
       if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
