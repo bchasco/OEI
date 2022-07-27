@@ -5,11 +5,12 @@
 #'@param pwd Default password
 #'@param db Database name
 #'@param species a list of species (commonName and Age_ClassByLength)
-#'@param studyType most likely 'Regular', but could also include 'Maximize Catch'
+#'@param studyType most likely 'Regular' or 'Maximize Catch'
 #'@param goodHaul use data from good hauls only?
 #'@param day use hauls from daytime only?
 #'@param includeRepeats include cpue from repeat trawls?
-#'@return table A data.frame with the CPUE data from the selected species
+#'@param averageRepeats average cpue from all repeat (including nonconsecutive) trawls? This will provide station level data, not haul level data.
+#'@return A data.frame with the CPUE data from the selected species
 #'@export getCPUE
 getCPUE <- function(uid = uid,
                     pwd = pwd,
@@ -18,7 +19,8 @@ getCPUE <- function(uid = uid,
                     studyType = c('Regular','Maximize Catch'),
                     goodHaul = TRUE,
                     day = TRUE,
-                    includeRepeats=TRUE) {
+                    includeRepeats=TRUE,
+                    averageRepeats=FALSE) {
 
   # Make sure the species list is the correct format
   if(!is.data.frame(species)){ 
@@ -105,6 +107,14 @@ getCPUE <- function(uid = uid,
   
   # Convert all NAs to 0s
   myData[is.na(myData)]<-0
+  
+  if (averageRepeats) {
+    # This ignores the fact that some repeats are nonconsecutive
+    vars2ave<-colnames(myData)[c(5,6,13:ncol(myData))]
+    myData <- dplyr::group_by(myData, Station, Year, Month)
+    myData <- dplyr::summarise_at(myData, dplyr::vars(dplyr::all_of(vars2ave)), mean)
+    myData <- as.data.frame(myData) # Otherwise it's a tibble and I don't understand those
+  }
   
   # Close connections
   RODBC::odbcCloseAll()
