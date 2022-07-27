@@ -107,11 +107,11 @@ getCPUE <- function(uid = uid,
   if (averageRepeats) {
     # This ignores the fact that some repeats are nonconsecutive
     vars2ave<-colnames(myData)[c(6,7,14:ncol(myData))]
-    myData <- dplyr::group_by(myData, Station, Year, Month)
+    myData <- dplyr::group_by(myData, Station, Year, Month, Depth)
     myData <- dplyr::summarise_at(myData, dplyr::vars(dplyr::all_of(vars2ave)), mean)
     myData <- as.data.frame(myData) # Otherwise it's a tibble and I don't understand those
     # remove the NA after non-salmonid names
-    for (cc in 6:ncol(myData)) {
+    for (cc in 7:ncol(myData)) {
       myName<-colnames(myData)[cc]
       if (substr(myName, nchar(myName)-2, nchar(myName))==" NA")
         colnames(myData)[cc]<-substr(myName, 1, nchar(myName)-3)
